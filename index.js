@@ -19,6 +19,25 @@ const commands = ["start", "stop"];
 const grammar = `#JSGF V1.0; grammar commands; public <command> = ${commands.join(
   " | "
 )};`;
+const saveButton = document.querySelector("#saveButton");
+
+saveButton.addEventListener("click", () => {
+  // Haal de gegenereerde afbeelding op
+  const hfImage = document.querySelector("#hf");
+
+  // Controleer of er een afbeelding is
+  if (hfImage.src) {
+    // Maak een nieuwe link aan om de afbeelding op te slaan
+    const downloadLink = document.createElement("a");
+    downloadLink.href = hfImage.src;
+    downloadLink.download = "generated_image.png"; // Geef de afbeelding een standaardbestandsnaam
+
+    // Simuleer een klik op de downloadlink
+    downloadLink.click();
+  } else {
+    alert("Er is geen afbeelding om op te slaan.");
+  }
+});
 
 document.querySelector("#loading").style.display = "none";
 
@@ -46,22 +65,15 @@ recognition.onresult = function (event) {
 
   // update DOM
   document.querySelector("#commando").innerHTML = recognizedSpeech;
-};
 
-// the function that makes images
-const makeImage = async (prompt) => {
-  // showLoading();
-  let result = await inference.textToImage({
-    inputs: `${prompt}`,
-    model: "stabilityai/stable-diffusion-2",
-    parameters: {
-      negative_prompt: "blurry"
-    }
-  });
-  document.querySelector("#hf").src = URL.createObjectURL(result);
-  // hideLoading();
+  // Check if the recognized speech is "start"
+  if (recognizedSpeech === "start") {
+    // Generate an image based on a prompt
+    const prompt =
+      "foto van een laptop geschilderd door Vincent Van Gogh, laptop in de voorgrond, met een hond erop, in een bos, met een zonsondergang";
+    makeImage(prompt);
+  } else if (recognizedSpeech === "stop") {
+    // Display a message when "stop" is recognized
+    document.querySelector("#commando").innerHTML = "Commando gestopt";
+  }
 };
-
-makeImage(
-  "foto van een laptop geschilderd door Vincent Van Gogh, laptop in de voorgrond, met een hond erop, in een bos, met een zonsondergang"
-);
