@@ -20,7 +20,7 @@ const grammar = `#JSGF V1.0; grammar commands; public <command> = ${commands.joi
   " | "
 )};`;
 
-document.querySelector("#loading").style.display = "none";
+document.querySelector("#loading").style.display = "block";
 
 // just speech recognition settings, standard MDN documentation stuff
 const recognition = new SpeechRecognition();
@@ -59,9 +59,9 @@ const makeImage = async (prompt) => {
     }
   });
   document.querySelector("#hf").src = URL.createObjectURL(result);
-  // hideLoading();
+  hideLoading();
 };
 
 makeImage(
-  "foto van een laptop geschilderd door Vincent Van Gogh, laptop in de voorgrond, met een hond erop, in een bos, met een zonsondergang"
+  "foto van een bord spek met een kip"
 );
