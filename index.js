@@ -20,7 +20,7 @@ const grammar = `#JSGF V1.0; grammar commands; public <command> = ${commands.joi
   " | "
 )};`;
 
-document.querySelector("#loading").style.display = "block";
+document.querySelector("#loading").style.display = "hidden";
 
 // just speech recognition settings, standard MDN documentation stuff
 const recognition = new SpeechRecognition();
@@ -63,5 +63,5 @@ const makeImage = async (prompt) => {
 };
 
 makeImage(
-  "foto van een bord spek met een kip"
+  "foto van een bord met spaghetti"
 );
